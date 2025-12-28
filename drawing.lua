@@ -494,3 +494,5 @@ end
 function Drawing.Clear()
 	ScreenGui:ClearAllChildren()
 end
+
+return Drawing
