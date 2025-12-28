@@ -1,3 +1,63 @@
+local Library = {
+	directory = {
+		["main_folder"] = "drawing",
+		["fonts"] = "drawing/fonts/",
+		["assets"] = "drawing/assets/",
+	},
+}
+
+local fonts = {}; do
+	function Register_Font(Name, Weight, Style, Asset)
+		if not isfile(Library.directory["fonts"] .. Asset.Id) then
+			writefile(Library.directory["fonts"] .. Asset.Id, Asset.Font)
+		end
+
+		if isfile(Library.directory["fonts"] .. Name .. ".font") then
+			delfile(Library.directory["fonts"] .. Name .. ".font")
+		end
+
+		local Data = {
+			name = Name,
+			faces = {
+				{
+					name = "Regular",
+					weight = Weight,
+					style = Style,
+					assetId = getcustomasset(Library.directory["fonts"] .. Asset.Id),
+				},
+			},
+		}
+
+		writefile(Library.directory["fonts"] .. Name .. ".font", game:GetService("HttpService"):JSONEncode(Data))
+
+		return getcustomasset(Library.directory["fonts"] .. Name .. ".font");
+	end
+
+	local ProggyTiny = Register_Font("ProggyTiny", 200, "Normal", {
+		Id = "ProggyTiny.ttf",
+		Font = game:HttpGet("https://github.com/i77lhm/storage/raw/refs/heads/main/fonts/tahoma_bold.ttf"),
+	})
+
+	local ProggyClean = Register_Font("ProggyClean", 200, "normal", {
+		Id = "ProggyClean.ttf",
+		Font = game:HttpGet("https://github.com/i77lhm/storage/raw/refs/heads/main/fonts/ProggyClean.ttf")
+	})
+
+	local Tahoma = Register_Font("ProggyClean", 200, "normal", {
+		Id = "Tahoma.ttf",
+		Font = game:HttpGet("https://github.com/i77lhm/storage/raw/refs/heads/main/fonts/fs-tahoma-8px.ttf")
+	})
+
+	font = {
+		["TahomaBold"] = Font.new(ProggyTiny, Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+		["ProggyClean"] = Font.new(ProggyClean, Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+		["Tahoma"] = Font.new(Tahoma, Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+	}
+end
+
+
+
+
 local DrawingLib = {}
 local RunService = game:GetService("RunService")
 
