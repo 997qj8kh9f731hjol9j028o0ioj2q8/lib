@@ -162,6 +162,7 @@ function DrawingLib.Square()
 
 	local outline = Instance.new("UIStroke")
 	outline.Parent = frame
+	outline.LineJoinMode = Enum.LineJoinMode.Miter
 
 	local function Update()
 		if not square._instance then return end
