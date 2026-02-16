@@ -293,7 +293,7 @@ function DrawingLib.Text()
 		label.TextSize = text.Size
 		label.TextColor3 = text.Color
 		label.TextTransparency = text.Transparency
-		label.FontFace = text.FontFace or font.ProggyClean
+		label.FontFace = font.ProggyClean
 
 		if text.Center then
 			label.Position = UDim2.new(0, text.Position.X, 0, text.Position.Y)
