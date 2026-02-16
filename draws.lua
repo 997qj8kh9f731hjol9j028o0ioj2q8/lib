@@ -83,6 +83,7 @@ local function CreateDrawingObject(objectType)
 		Visible = false,
 		Color = Color3.new(1, 1, 1),
 		Transparency = 1,
+		ZIndex = 1,
 		Remove = function(self)
 			if self._instance then
 				self._instance:Destroy()
@@ -110,6 +111,7 @@ function DrawingLib.Line()
 	frame.BorderSizePixel = 0
 	frame.AnchorPoint = Vector2.new(0.5, 0.5)
 	frame.Parent = ScreenGui
+	frame.ZIndex = line.ZIndex
 	line._instance = frame
 
 	local function Update()
@@ -118,6 +120,7 @@ function DrawingLib.Line()
 		frame.Visible = line.Visible
 		frame.BackgroundColor3 = line.Color
 		frame.BackgroundTransparency = 1 - line.Transparency
+		frame.ZIndex = line.ZIndex
 
 		local from = line.From
 		local to = line.To
@@ -151,7 +154,6 @@ function DrawingLib.Square()
 	square.Filled = false
 	square.Size = Vector2.new(100, 100)
 	square.Position = Vector2.new(0, 0)
-	square.ZIndex = 1
 
 	local frame = Instance.new("Frame")
 	frame.Name = "Square_" .. square._id
@@ -170,6 +172,7 @@ function DrawingLib.Square()
 		frame.Visible = square.Visible
 		frame.Size = UDim2.new(0, square.Size.X, 0, square.Size.Y)
 		frame.Position = UDim2.new(0, square.Position.X, 0, square.Position.Y)
+		frame.ZIndex = square.ZIndex
 
 		if square.Filled then
 			frame.BackgroundColor3 = square.Color
@@ -265,7 +268,7 @@ function DrawingLib.Text()
 	text.Outline = false
 	text.OutlineColor = Color3.new(0, 0, 0)
 	text.Position = Vector2.new(0, 0)
-	text.FontFace = Library.font
+	text.FontFace = font.ProggyClean
 
 	local label = Instance.new("TextLabel")
 	label.Name = "Text_" .. text._id
@@ -289,7 +292,7 @@ function DrawingLib.Text()
 		label.Text = text.Text
 		label.TextSize = text.Size
 		label.TextColor3 = text.Color
-		label.TextTransparency = 1 - text.Transparency
+		label.TextTransparency = text.Transparency
 		label.FontFace = text.FontFace or font.ProggyClean
 
 		if text.Center then
@@ -341,7 +344,6 @@ function DrawingLib.Triangle()
 	frame.Parent = ScreenGui
 	triangle._instance = frame
 
-	-- Create 3 lines for triangle outline or filled version
 	local lines = {}
 	for i = 1, 3 do
 		local line = Instance.new("Frame")
@@ -551,7 +553,6 @@ function Drawing.new(objectType)
 	end
 end
 
---  function
 function Drawing.Clear()
 	ScreenGui:ClearAllChildren()
 end
